@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CMD xmlns="http://www.clarin.eu/cmd/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" CMDVersion="1.1" xsi:schemaLocation="http://www.clarin.eu/cmd/ http://catalog.clarin.eu/ds/ComponentRegistry/rest/registry/profiles/clarin.eu:cr1:p_1357720977461/xsd">
+  <Header>
+    <MdCreator>Paul Post</MdCreator>
+    <MdCreationDate>2012-01-15</MdCreationDate>
+    <MdCollectionDisplayName>Meertens collections: PILNAR</MdCollectionDisplayName>
+    <MdSelfLink>01f7a5cb-d230-4350-beb3-dc37cafa1d66</MdSelfLink>
+  </Header>
+  <Resources>
+    <ResourceProxyList>
+      <ResourceProxy>
+        <ResourceType>Resource</ResourceType>
+        <ResourceRef name="De PILNAR editor.docx">/Users/MarcK/test/pilnar/data/ddfb1b36-0a3c-43ad-9f18-a6b2af0fa5b3.De PILNAR editor.docx</ResourceRef>
+      </ResourceProxy>
+    </ResourceProxyList>
+    <JournalFileProxyList />
+    <ResourceRelationList />
+  </Resources>
+  <Components>
+    <PelgrimProfile>
+      <StoryTeller>
+        <Person>
+          <Name>test</Name>
+          <Email>test@test.com</Email>
+        </Person>
+      </StoryTeller>
+      <Actors>
+        <Person>
+          <Name>test</Name>
+          <Gender>null</Gender>
+          <BirthDate>
+            <Day />
+            <Month />
+            <Year />
+          </BirthDate>
+          <Motivation />
+          <Role />
+        </Person>
+      </Actors>
+      <Route>
+        <Description />
+        <TravelGroup />
+        <TravelMethod />
+        <Start>
+          <Date>
+            <Day />
+            <Month />
+            <Year>2012</Year>
+          </Date>
+          <Place />
+        </Start>
+        <Finish>
+          <Date>
+            <Day />
+            <Month />
+            <Year>2012</Year>
+          </Date>
+          <Place />
+        </Finish>
+      </Route>
+      <Story>
+        <Title>Op weg naar Santiago</Title>
+        <Text>test</Text>
+      </Story>
+      <TechnicalMetadata ref="_2">
+        <MimeType>text/html</MimeType>
+      </TechnicalMetadata>
+    </PelgrimProfile>
+  </Components>
+</CMD>
