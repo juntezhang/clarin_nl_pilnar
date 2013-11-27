@@ -9,7 +9,6 @@
 require_once(dirname(__FILE__) .'/IndexCMDI.php');
 
 mb_http_output("UTF-8");
-ob_start("mb_output_handler");
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: content-type');
