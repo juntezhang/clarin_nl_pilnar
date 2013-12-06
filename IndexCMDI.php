@@ -5,18 +5,26 @@
 #@
 #@ A PHP class for constructing a CMDI index, based on the CMDI MI approach (c) :-)
 #@-------------------------------------------------------------------------------------
+ini_set('error_reporting', E_ALL);
+
+ini_set('log_errors',TRUE);
+ini_set('html_errors',FALSE);
+ini_set('error_log','/tmp/error_log.txt');
+ini_set('display_errors',FALSE);
+error_reporting(E_ALL | E_STRICT);
 
 class IndexCMDI {
 	private $elements = array();
 	private $schema_lines = array();
 	private $tags_merged = array();
 	private $index_data = array();
-	
+
 	/* 
 		set up the directory where the mapping should be stored
 	*/
-	//private $dir_cache = "/data/PILNAR_SEARCH/mapping/";
-	private $dir_cache = "/Development/pilnar/scripts/mapping/";
+	private $dir_cache = "/data/PILNAR_SEARCH/mapping/";
+	//private $dir_cache = "/Development/pilnar/scripts/mapping/";
+	//private $dir_cache = "/tmp/";
 	
 	function __construct($url){
 			$this->url = $url;
@@ -28,7 +36,7 @@ class IndexCMDI {
 		$lines = file_get_contents($file);
 		
 		if ($lines === false) {
-			header("HTTP/1.0 500 Internal Server Error");
+			//header("HTTP/1.0 500 Internal Server Error");
 			throw new Exception('Failed to open ' . $file);
 		} else {
 			$lines = explode("\n", $lines);
@@ -350,7 +358,7 @@ class IndexCMDI {
 				
 				// extractor in action
 				$post_url = $this->url.'update/extract?stream.file='.$val.'&extractOnly=true&extractFormat=text&resource.name='.$val;
-				
+
 				$header = array("Content-type:text/plain" , "charset=utf-8");
 				curl_setopt($ch, CURLOPT_URL, $post_url);
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
@@ -444,41 +452,35 @@ class IndexCMDI {
 		$this->post( sprintf('<delete><id>%s</id></delete>', $id) );
 	}
 	
-	function delete_all($document) {
+	function delete_all() {
 		$url = $this->url.'update';
 		$url = $url . "?stream.body=%3Cdelete%3E%3Cquery%3E*:*%3C/query%3E%3C/delete%3E&commit=true";
-		
-		$post_string .= file_get_contents($document);
 		
 		$header = array("Content-type:text/xml; charset=utf-8");
 		
 		$ch = curl_init();
-		
+		print_r($post_string);
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
 		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 		curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
 		
 		$dat = curl_exec($ch);
-		#print $dat;
+		//print $dat;
 		
 		if (curl_errno($ch)) {
 			header("HTTP/1.1 500 Internal Server Error");
 			print "curl_error:" . curl_error($ch);
 		}
 		else {
+		  echo "\nEverything deleted!\n";
 			curl_close($ch);
 		}	
 	}
-	function reload_index($document, $core) {
-		$url = "http://localhost:8983/solr/admin/cores?action=RELOAD&core=" . $core;
-		//$url = "http://yago.meertens.knaw.nl/solr/admin/cores?action=RELOAD&core=" . $core;
-		
-		$post_string = "";
-		$post_string .= file_get_contents($document);
+	function reload_index($core) {
+		//$url = "http://localhost:8983/solr/admin/cores?action=RELOAD&core=" . $core;
+		$url = "http://yago.meertens.knaw.nl/solr/admin/cores?action=RELOAD&core=" . $core;
 		
 		$header = array("Content-type:text/xml; charset=utf-8");
 		
@@ -488,8 +490,7 @@ class IndexCMDI {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+
 		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 		curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
 		
